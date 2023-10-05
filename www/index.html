@@ -150,7 +150,6 @@
 
 
     // 変数宣言
-
     var active = false;
     var startTime =0;
     var period =0;
@@ -166,23 +165,21 @@
 
     // Alarmの処理
     function alarm(){
-     var canvas = $("#mycanvas")[0];
-     var ctx = canvas.getContext("2d");
-     var img = new Image();
-     img.src = "ksuisbg.gif";
-     img.onload = function(){
-       ctx.drawImage(img,0,0,300,300);
-    };
-    var audio = new Audio();
-    audio.src = "pin.wav";
-    audio.play();
-
-    
-    }
+       var canvas = $("#mycanvas")[0];
+       var ctx = canvas.getContext("2d");
+       var img = new Image();
+       img.src = "ksuisbg.gif";
+       img.onload = function(){
+         ctx.drawImage(img,0,0,300,300);
+         };
+         var audio = new Audio();
+         audio.src = "pin.wav";
+         audio.play();
+         }
     
     // ButtonAがクリックされた時の処理
     function btnAClick(e){
-      active = ture;
+      active = true;
       startTime = new Date();
         
         
@@ -191,7 +188,8 @@
     // ButtonBがクリックされた時の処理
     function btnBClick(e){
       active =false;
-        
+      
+
         
     }
 
@@ -208,6 +206,18 @@
  
     // 繰り返し実行する処理
     function timer(){  
+      if(active){
+        var time = parseInt((new Date() - startTime)/1000 );
+        var rest = period -time;
+        $("#time").html("経過時間： " +time);
+        $("#remain").html("残り時間： " +rest);
+        analog(rest);
+        if(rest<=0){
+          active=false;
+          alarm();
+        }
+      }
+
         
         
     } 
